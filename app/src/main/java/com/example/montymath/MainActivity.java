@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     TextView Multiplication;
     ModelView vm;
     TextView score;
+    int state =1;
 
     public void addNote (String s){
         Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
@@ -66,25 +67,26 @@ public class MainActivity extends AppCompatActivity {
         EtgarButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                state = 2;
             }
         });
         cefel_ad_20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vm.cefel_20();
+                vm.cefel_20(); state = 1;
             }
         });
         cefel_board.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }//change
+                state = 3;
+                vm.cefel_board();
+            }
         });
         chak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vm.chak(answer.getText().toString())){
+                if(vm.chak(answer.getText().toString(),state)){
                     addNote("Correct");
                 }else {
                     addNote("Incorrect");

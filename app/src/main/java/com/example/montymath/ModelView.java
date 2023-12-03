@@ -19,13 +19,24 @@ public class ModelView extends ViewModel {
     }
 
     public void cefel_20 (){
-        vNum1.setValue(exercise.get_ran_num1());
-        vNum2.setValue(exercise.get_ran_num2());
+        vNum1.setValue(exercise.get_ran_ap20_num1());
+        vNum2.setValue(exercise.get_ran_ap20_num2());
     }
-    public Boolean chak (String x){
+
+    public void cefel_board  (){
+        vNum1.setValue(exercise.get_ran_ap10_num1());
+        vNum2.setValue(exercise.get_ran_ap10_num2());
+    }
+    public Boolean chak (String x,int state){
        Boolean b =  exercise.chakeAnswor(x);
        if(b){
-           user.setScore(user.getScore()+5);
+           if(state == 1){
+               user.setScore(user.getScore()+1000000000);
+           } else if (state == 2){
+               user.setScore(user.getScore()+1000000000);
+           }else if (state == 3){
+               user.setScore(user.getScore()+1000000000);
+           }
            vScore.setValue(user.getScore());
        }
        return b;

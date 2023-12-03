@@ -36,14 +36,24 @@ public class Exercise {
         answer = x;
         return y == x;
     }
-    public int get_ran_num1 (){
+    public int get_ran_ap20_num1 (){
         Random r = new Random();
         this.num1 = r.nextInt(20)+1;
         return num1;
     }
-    public int get_ran_num2 (){
+    public int get_ran_ap20_num2 (){
         Random r = new Random();
         this.num2 = r.nextInt(20)+1;
+        return num2;
+    }
+    public int get_ran_ap10_num1 (){
+        Random r = new Random();
+        this.num1 = r.nextInt(10)+1;
+        return num1;
+    }
+    public int get_ran_ap10_num2 (){
+        Random r = new Random();
+        this.num2 = r.nextInt(10)+1;
         return num2;
     }
 
