@@ -31,11 +31,11 @@ public class ModelView extends ViewModel {
        Boolean b =  exercise.chakeAnswor(x);
        if(b){
            if(state == 1){
-               user.setScore(user.getScore()+1000000000);
+               user.setScore(user.getScore()+10);
            } else if (state == 2){
-               user.setScore(user.getScore()+1000000000);
+               user.setScore(user.getScore()+10);
            }else if (state == 3){
-               user.setScore(user.getScore()+1000000000);
+               user.setScore(user.getScore()+5);
            }
            vScore.setValue(user.getScore());
        }

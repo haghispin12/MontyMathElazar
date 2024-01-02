@@ -1,6 +1,11 @@
 package com.example.montymath;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,7 +36,20 @@ public class MainActivity extends AppCompatActivity {
     TextView Multiplication;
     ModelView vm;
     TextView score;
+    Button rate;
     int state =1;
+
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    int num = result.getData().getIntExtra("rate",-1);
+                    rate.setText(num+"");
+                }
+            }
+    );
 
     public void addNote (String s){
         Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
@@ -57,13 +75,25 @@ public class MainActivity extends AppCompatActivity {
         num_B = findViewById(R.id.num_B);
         answer = findViewById(R.id.answer);
         chak = findViewById(R.id.chak);
-        show = findViewById(R.id.show);
+        show = findViewById(R.id.show_all);
         Multiplication = findViewById(R.id.multiplication);
         score = findViewById(R.id.score);
+        rate = findViewById(R.id.rate);
 
         vm.appDateName(name);
 
 
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment fragment = new fragment();
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.frameLayout, new fragment());
+                trans.addToBackStack(null);
+                trans.commit();
+
+            }
+        });
         EtgarButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +157,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), com.example.montymath.rate.class);
+                activityResultLauncher.launch(intent1);
+            }
+        });
 
     }
 }
