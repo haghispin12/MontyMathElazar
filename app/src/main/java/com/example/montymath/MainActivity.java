@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-//                trans.replace(R.id.frameLayout, new ShowAllUserFragment());
-//                trans.commit();
-                Intent intent1 = new Intent(MainActivity.this, showAllUser.class);
-                startActivity(intent1);
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.frameLayout, new ShowAllUserFragment());
+                trans.commit();
+//                Intent intent1 = new Intent(MainActivity.this, showAllUser.class);
+//                startActivity(intent1);
 
             }
         });

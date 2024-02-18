@@ -3,6 +3,7 @@ package com.example.montymath;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -83,8 +85,18 @@ public class ShowAllUserFragment extends Fragment {
                 startCamera.launch(cameraIntent);
             }
         });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vm1.setUserImage(uri);
+                vm1.addUserDB(requireActivity());
+                showToast("good");
+
+            }
+        });
         return view1 ;
     }
+
 
     private void initView(View view) {
         edit_user_name = view.findViewById(R.id.edit_user_name);
@@ -94,5 +106,8 @@ public class ShowAllUserFragment extends Fragment {
         img = view.findViewById(R.id.picture);
         btn = view.findViewById(R.id.add_user_button);
 
+    }
+    public void showToast (String s){
+        Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
     }
 }

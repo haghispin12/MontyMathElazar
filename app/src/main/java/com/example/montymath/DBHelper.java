@@ -1,6 +1,7 @@
 package com.example.montymath;
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -71,13 +73,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public long insert(User user,Context context){
         database = getWritableDatabase(); // get access to write the database
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, user.getUserName());
-        values.put(COLUMN_RATE, user.getRating());
-        values.put(COLUMN_SCORE, user.getMyScore());
+        values.put(COLUMN_NAME, user.getName());
+        values.put(COLUMN_RATE, user.getRete());
+        values.put(COLUMN_SCORE, user.getScore());
 
         // stored as Binary Large OBject ->  BLOB
         try {
-            values.put(COLUMN_PICTURE, getBytes(context,user.getUri()));
+            values.put(COLUMN_PICTURE, getBytes(context,user.getImageProfileUri()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -86,8 +88,9 @@ public class DBHelper extends SQLiteOpenHelper {
         user.setId(id);
         database.close();
         return id;
+        //showToast("added succesfully",context);
     }
-
+//
 //    // remove a specific user from the table
 //    public void deleteUser(User user)
 //    {
@@ -117,27 +120,27 @@ public class DBHelper extends SQLiteOpenHelper {
 //    }
 //
 //    // return all rows in table
-//    public ArrayList<User> selectAll(){
-//        database = getReadableDatabase(); // get access to read the database
-//        ArrayList<User> users = new ArrayList<>();
-//        Cursor cursor = database.query(TABLE_RECORD, allColumns, null, null, null, null, null); // cursor points at a certain row
-//        if (cursor.getCount() > 0) {
-//            while (cursor.moveToNext()) {
-//                String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
-//                int rating = cursor.getInt(cursor.getColumnIndex(COLUMN_RATE));
-//                int score = cursor.getInt(cursor.getColumnIndex(COLUMN_SCORE));
-//                byte[] bytes = cursor.getBlob(cursor.getColumnIndex(COLUMN_PICTURE));
-//
-//                Bitmap bitmap = getImage(bytes);
-//                long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-//                User user= new User(id,name,rating,bitmap,score);
-//                users.add(user);
-//            }
-//        }
-//        cursor.close();
-//        database.close();
-//        return users;
-//    }
+    public ArrayList<User> selectAll(){
+        database = getReadableDatabase(); // get access to read the database
+        ArrayList<User> users = new ArrayList<>();
+        Cursor cursor = database.query(TABLE_RECORD, allColumns, null, null, null, null, null); // cursor points at a certain row
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+                @SuppressLint("Range") int rating = cursor.getInt(cursor.getColumnIndex(COLUMN_RATE));
+                @SuppressLint("Range") int score = cursor.getInt(cursor.getColumnIndex(COLUMN_SCORE));
+                @SuppressLint("Range") byte[] bytes = cursor.getBlob(cursor.getColumnIndex(COLUMN_PICTURE));
+
+                Bitmap bitmap = getImage(bytes);
+                @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+                User user= new User(id,name,rating,bitmap,score);//error in create user
+                users.add(user);
+            }
+        }
+        cursor.close();
+        database.close();
+        return users;
+    }
 //
 //    //
 //    // I prefer using this one...
@@ -198,5 +201,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private  Bitmap getImage(byte[] image) {
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
+
 
 }

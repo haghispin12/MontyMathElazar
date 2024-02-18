@@ -1,5 +1,8 @@
 package com.example.montymath;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,6 +12,7 @@ public class ModelView extends ViewModel {
     public MutableLiveData <Integer> vScore;
     public MutableLiveData <Integer> vRete;
     public MutableLiveData <String> vName;
+
 
     Exercise exercise;
     User user;
@@ -63,6 +67,20 @@ public class ModelView extends ViewModel {
     public void setRate (int r){
         user.rete = r;
         vRete.setValue(r);
+    }
+    public void addUserDB (Context context){
+        DBHelper dbHelper = new DBHelper(context);
+        dbHelper.insert(user,context);
+    }
+    public void selectAllDB (Context context){
+        DBHelper dbHelper = new DBHelper(context);\
+        //dbHelper.
+    }
+    public void setUserImage(Uri uri){
+        user.setImageUri(uri);
+    }
+    public void setUserName (String name){
+        user.setName(name);
     }
 
 }

@@ -1,9 +1,13 @@
 package com.example.montymath;
 
+import android.net.Uri;
+
 public class User {
     private String name;
     private int score;
     int rete;
+    long id;
+    Uri imageProfile;
 
     public void setName(String name) {
         this.name = name;
@@ -22,4 +26,9 @@ public class User {
         return score;
     }
     public String getName(){return name;}
+    public int getRete (){return rete;}
+    public Uri getImageProfileUri(){return imageProfile;}
+    public void setId (long ID){id = ID;}
+    public void setImageUri (Uri imageProfile){this.imageProfile = imageProfile;}
+
 }
