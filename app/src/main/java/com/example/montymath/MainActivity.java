@@ -7,7 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -19,9 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Observable;
-import java.util.Random;
-
 public class MainActivity extends AppCompatActivity {
 
     Button EtgarButtom;
@@ -32,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     EditText answer;
     Button chak;
     Button show;
+    Button showAllUser;
     Button SaveButton;
     TextView Multiplication;
     ModelView vm;
@@ -46,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     int num = result.getData().getIntExtra("rate",-1);
+                    vm.setRate(num);
                     rate.setText(num+"");
                 }
             }
@@ -67,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         vm = new ViewModelProvider(this).get(ModelView.class);
 
+        vm.vName.setValue(name);
+
         SaveButton = findViewById(R.id.SaveButton);
         EtgarButtom = findViewById(R.id.EtgarButtom);
         cefel_ad_20 = findViewById(R.id.cefel_ad_20);
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         answer = findViewById(R.id.answer);
         chak = findViewById(R.id.chak);
         show = findViewById(R.id.show_all);
+
         Multiplication = findViewById(R.id.multiplication);
         score = findViewById(R.id.score);
         rate = findViewById(R.id.rate);
@@ -86,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment fragment = new fragment();
-                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-                trans.replace(R.id.frameLayout, new fragment());
-                trans.addToBackStack(null);
-                trans.commit();
+//                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+//                trans.replace(R.id.frameLayout, new ShowAllUserFragment());
+//                trans.commit();
+                Intent intent1 = new Intent(MainActivity.this, showAllUser.class);
+                startActivity(intent1);
 
             }
         });
@@ -128,16 +129,10 @@ public class MainActivity extends AppCompatActivity {
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                addNote("save");
             }
         });
 
-        show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         vm.vNum1.observe(this,new Observer<Integer>() {
             @Override
             public void onChanged(Integer num1) {
